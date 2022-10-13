@@ -57,22 +57,36 @@ const strikeBallJudgment = (randomNumberList, userInputNumber) => {
   return [strikeCount, ballCount];
 };
 
+const generateResultMessage = (strikeCount, ballCount) => {
+  if (strikeCount === 0 && ballCount === 0) {
+    return '낫싱';
+  }
+  if (strikeCount === 0) {
+    return `${ballCount}볼`;
+  }
+  if (ballCount === 0) {
+    return `${strikeCount}스트라이크`;
+  }
+  return `${ballCount}볼 ${strikeCount}스트라이크`;
+};
+
 export default function BaseballGame() {
   const submitButton = document.querySelector('#submit');
   const userInput = document.querySelector('#user-input');
   const randomNumberList = randomNumberGenerator();
-
+  console.log(randomNumberList);
   const play = (computerInputNumbers, userInputNumbers) => {
     const [strikeCount, ballCount] = strikeBallJudgment(computerInputNumbers, userInputNumbers);
-    console.log(`${strikeCount} ${ballCount}`);
+    return generateResultMessage(strikeCount, ballCount);
   };
 
   const gameStart = (e) => {
     e.preventDefault();
     if (isValidNumbers(userInput.value)) {
-      console.log(randomNumberList);
       const userInputNumber = userInput.value.split('').map((v) => +v);
       play(randomNumberList, userInputNumber);
+      const resultMessage = play(randomNumberList, userInputNumber);
+      console.log(resultMessage);
     } else {
       alert('🙅 1~9까지의 수를 중복없이 3개 작성해주세요!');
       userInput.value = '';
