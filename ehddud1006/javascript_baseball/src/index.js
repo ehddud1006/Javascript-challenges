@@ -74,19 +74,49 @@ export default function BaseballGame() {
   const submitButton = document.querySelector('#submit');
   const userInput = document.querySelector('#user-input');
   const resultContainer = document.querySelector('#result');
-  const randomNumberList = randomNumberGenerator();
-
+  let randomNumberList = randomNumberGenerator();
+  let isAnswer = false;
   console.log(randomNumberList);
+  const gameRestart = () => {
+    const appContainer = document.querySelector('#app');
+    const restartTextWrap = document.createElement('div');
+    const restartButtonWrap = document.createElement('p');
+    const restartText = document.createElement('span');
+    const restartButton = document.createElement('button');
+
+    restartText.textContent = '게임을 새로 시작하시겠습니까? ';
+    restartButton.setAttribute('id', 'game-restart-button');
+    restartButton.textContent = '게임 재시작';
+    restartTextWrap.appendChild(restartText);
+    restartButtonWrap.appendChild(restartButton);
+    appContainer.appendChild(restartTextWrap);
+    appContainer.appendChild(restartButtonWrap);
+    restartButton.addEventListener('click', () => {
+      resultContainer.innerHTML = '';
+      isAnswer = false;
+      userInput.value = '';
+      randomNumberList = randomNumberGenerator();
+      appContainer.removeChild(restartTextWrap);
+      appContainer.removeChild(restartButtonWrap);
+    });
+  };
+
   const play = (computerInputNumbers, userInputNumbers) => {
     const [strikeCount, ballCount] = strikeBallJudgment(computerInputNumbers, userInputNumbers);
     if (strikeCount === 3) {
+      isAnswer = true;
       return `<p>🎉<strong> 정답을 맞추셨습니다! </strong>🎉</p>`;
     }
     return generateResultMessage(strikeCount, ballCount);
   };
 
   const resultProvider = (message) => {
-    resultContainer.innerHTML = message;
+    if (isAnswer) {
+      resultContainer.innerHTML = message;
+      gameRestart();
+    } else {
+      resultContainer.textContent = message;
+    }
   };
 
   const gameStart = (e) => {
