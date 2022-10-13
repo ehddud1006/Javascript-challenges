@@ -9,6 +9,26 @@ const randomNumberGenerator = () => {
   }
   return randomNumberList;
 };
+
+const isRightLength = (num) => {
+  return num.length === 3;
+};
+const hasDuplicatedNumbers = (num) => {
+  return new Set(num).size !== num.length;
+};
+
+const hasZero = (num) => {
+  return num.indexOf('0') !== -1;
+};
+
+const isNumeric = (num) => {
+  return !Number.isNaN(Number(num));
+};
+
+const isValidNumbers = (num) => {
+  return !hasDuplicatedNumbers(num) && !hasZero(num) && isRightLength(num) && isNumeric(num);
+};
+
 export default function BaseballGame() {
   const submitButton = document.querySelector('#submit');
   const userInput = document.querySelector('#user-input');
@@ -16,6 +36,12 @@ export default function BaseballGame() {
 
   const gameStart = (e) => {
     e.preventDefault();
+    if (isValidNumbers(userInput.value)) {
+      const userInputNumber = userInput.value.split('').map((v) => +v);
+    } else {
+      alert('🙅 1~9까지의 수를 중복없이 3개 작성해주세요!');
+      userInput.value = '';
+    }
   };
 
   const init = () => {
