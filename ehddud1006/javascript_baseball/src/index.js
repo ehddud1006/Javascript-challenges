@@ -73,11 +73,16 @@ const generateResultMessage = (strikeCount, ballCount) => {
 export default function BaseballGame() {
   const submitButton = document.querySelector('#submit');
   const userInput = document.querySelector('#user-input');
+  const resultContainer = document.querySelector('#result');
   const randomNumberList = randomNumberGenerator();
   console.log(randomNumberList);
   const play = (computerInputNumbers, userInputNumbers) => {
     const [strikeCount, ballCount] = strikeBallJudgment(computerInputNumbers, userInputNumbers);
     return generateResultMessage(strikeCount, ballCount);
+  };
+
+  const resultProvider = (message) => {
+    resultContainer.textContent = message;
   };
 
   const gameStart = (e) => {
@@ -86,7 +91,7 @@ export default function BaseballGame() {
       const userInputNumber = userInput.value.split('').map((v) => +v);
       play(randomNumberList, userInputNumber);
       const resultMessage = play(randomNumberList, userInputNumber);
-      console.log(resultMessage);
+      resultProvider(resultMessage);
     } else {
       alert('🙅 1~9까지의 수를 중복없이 3개 작성해주세요!');
       userInput.value = '';
