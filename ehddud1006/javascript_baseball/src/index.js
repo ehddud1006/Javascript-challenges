@@ -75,14 +75,18 @@ export default function BaseballGame() {
   const userInput = document.querySelector('#user-input');
   const resultContainer = document.querySelector('#result');
   const randomNumberList = randomNumberGenerator();
+
   console.log(randomNumberList);
   const play = (computerInputNumbers, userInputNumbers) => {
     const [strikeCount, ballCount] = strikeBallJudgment(computerInputNumbers, userInputNumbers);
+    if (strikeCount === 3) {
+      return `<p>🎉<strong> 정답을 맞추셨습니다! </strong>🎉</p>`;
+    }
     return generateResultMessage(strikeCount, ballCount);
   };
 
   const resultProvider = (message) => {
-    resultContainer.textContent = message;
+    resultContainer.innerHTML = message;
   };
 
   const gameStart = (e) => {
