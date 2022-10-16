@@ -17,3 +17,9 @@ const isInRangeArray = (arr, min, max) => {
 const isLengthEquals = (arr, num) => {
   return arr.length === num ? true : false;
 };
+
+const isEachUniqueNumber = () => {
+  return arr.every(element => {
+    return arr.indexOf(element) === arr.lastIndexOf(element);
+  });
+};
