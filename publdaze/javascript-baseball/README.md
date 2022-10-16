@@ -7,9 +7,8 @@
 
 ##### 1. Event Binding
 
-- [ ] (Keyboard Event) input
-- [ ] (Keyboard Event) keydown
-- [ ] (Mouse Event) click
+- [x] (Keyboard Event) input
+- [x] (Mouse Event) click
 
 ##### 2. 사용자 입력값 유효성 검증
 

@@ -12,5 +12,6 @@ module.exports = {
   rules: {
     'max-lines-per-function': ['error', 15],
     'no-console': 'warn',
+    'import/extensions': ['.js'],
   },
 };
