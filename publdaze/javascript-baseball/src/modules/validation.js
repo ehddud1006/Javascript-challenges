@@ -1,8 +1,7 @@
 const isNumberArray = arr => {
-  arr.forEach(element => {
-    if (Number.isNaN(element)) return false;
+  return arr.some(element => {
+    return Number.isNaN(element);
   });
-  return true;
 };
 
 const isInRange = (x, min, max) => {
@@ -10,10 +9,9 @@ const isInRange = (x, min, max) => {
 };
 
 const isInRangeArray = (arr, min, max) => {
-  arr.forEach(element => {
-    if (!isInRange(element, min, max)) return false;
+  return arr.every(element => {
+    return isInRange(element, min, max);
   });
-  return true;
 };
 
 const isLengthEquals = (arr, num) => {
