@@ -23,7 +23,7 @@
 
 ##### 3. 컴퓨터 랜덤 값 생성
 
-- [ ] `Random.pickNumberInRange`를 사용한 랜덤 값 생성
+- [x] MissionUtils 라이브러리를 사용한 랜덤 값 생성
 
 ##### 4. 결과 확인
 

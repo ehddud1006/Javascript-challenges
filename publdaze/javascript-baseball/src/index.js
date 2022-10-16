@@ -30,6 +30,7 @@ export default function BaseballGame() {
   submit.addEventListener('click', function (e) {
     e.preventDefault();
 
+    const randomNumbers = MissionUtils.Random.pickUniqueNumbersInRange(1, 9, 3);
     const inputNumArray = userInput.value.split('').map(Number);
     alertOccuredErrorCase(inputNumArray);
 
