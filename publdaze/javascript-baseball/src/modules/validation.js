@@ -1,6 +1,6 @@
 const isNumberArray = arr => {
-  return arr.some(element => {
-    return Number.isNaN(element);
+  return arr.every(element => {
+    return !Number.isNaN(element);
   });
 };
 
@@ -18,8 +18,16 @@ const isLengthEquals = (arr, num) => {
   return arr.length === num ? true : false;
 };
 
-const isEachUniqueNumber = () => {
+const isEachUniqueNumber = arr => {
   return arr.every(element => {
     return arr.indexOf(element) === arr.lastIndexOf(element);
   });
+};
+
+export {
+  isNumberArray,
+  isInRange,
+  isInRangeArray,
+  isLengthEquals,
+  isEachUniqueNumber,
 };
