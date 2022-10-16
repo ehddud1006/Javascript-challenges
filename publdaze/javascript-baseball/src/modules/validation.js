@@ -15,3 +15,7 @@ const isInRangeArray = (arr, min, max) => {
   });
   return true;
 };
+
+const isLengthEquals = (arr, num) => {
+  return arr.length === num ? true : false;
+};
