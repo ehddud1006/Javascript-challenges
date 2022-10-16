@@ -6,21 +6,25 @@ import {
   isEachUniqueNumber,
 } from './modules/validation.js';
 import alertMsg from './modules/announce.js';
+import {
+  countMatchNumbers,
+  countMatchNumbersWithPos,
+} from './modules/counting.js';
 
 const isOccuredError = inputNumArray => {
-  if (isNumberArray(inputNumArray)) {
+  if (!isNumberArray(inputNumArray)) {
     alertMsg('입력값은 숫자로만 구성되어야합니다.');
     return true;
   }
-  if (isInRangeArray(inputNumArray, 1, 9)) {
+  if (!isInRangeArray(inputNumArray, 1, 9)) {
     alertMsg('1~9 사이의 값을 넣어주세요.');
     return true;
   }
-  if (isLengthEquals(inputNumArray, 3)) {
+  if (!isLengthEquals(inputNumArray, 3)) {
     alertMsg('3개의 숫자를 넣어주세요.');
     return true;
   }
-  if (isEachUniqueNumber(inputNumArray)) {
+  if (!isEachUniqueNumber(inputNumArray)) {
     alertMsg('중복된 값이 있으면 안 됩니다.');
     return true;
   }
@@ -35,7 +39,12 @@ export default function BaseballGame() {
 
     const randomNumbers = MissionUtils.Random.pickUniqueNumbersInRange(1, 9, 3);
     const inputNumArray = userInput.value.split('').map(Number);
+    console.log(inputNumArray);
     if (isOccuredError(inputNumArray)) userInput.value = '';
+    else {
+      console.log(randomNumbers);
+      console.log(countMatchNumbersWithPos(randomNumbers, inputNumArray));
+    }
 
     result.textContent = '';
   });
