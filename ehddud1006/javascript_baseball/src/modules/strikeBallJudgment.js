@@ -1,20 +1,21 @@
 const strikeJudgment = (randomNumberList, userInputNumber) => {
   let strikeCount = 0;
   const notStrikeIndexList = [];
-  for (let i = 0; i < 3; i += 1) {
-    if (randomNumberList[i] === userInputNumber[i]) {
+  randomNumberList.forEach((randomNumber, index) => {
+    if (randomNumber === userInputNumber[index]) {
       strikeCount += 1;
     } else {
-      notStrikeIndexList.push(i);
+      notStrikeIndexList.push(index);
     }
-  }
+  });
+
   return [strikeCount, notStrikeIndexList];
 };
 
 const ballJudment = (notStrikeIndexList, randomNumberList, userInputNumber) => {
   let ballCount = 0;
-  notStrikeIndexList.forEach((notStrkeIndex) => {
-    if (randomNumberList.includes(userInputNumber[notStrkeIndex])) {
+  notStrikeIndexList.forEach((notStrikeIndex) => {
+    if (randomNumberList.includes(userInputNumber[notStrikeIndex])) {
       ballCount += 1;
     }
   });

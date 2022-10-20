@@ -1,12 +1,14 @@
+import { GAME_NUMBER_LENGTH } from './constant.js';
+
 const isRightLength = (num) => {
-  return num.length === 3;
+  return num.length === GAME_NUMBER_LENGTH;
 };
-const hasDuplicatedNumbers = (num) => {
-  return new Set(num).size !== num.length;
+const hasNotDuplicatedNumbers = (num) => {
+  return new Set(num).size === num.length;
 };
 
-const hasZero = (num) => {
-  return num.indexOf('0') !== -1;
+const hasNotZero = (num) => {
+  return num.indexOf('0') === -1;
 };
 
 const isNumeric = (num) => {
@@ -14,7 +16,7 @@ const isNumeric = (num) => {
 };
 
 const isValidNumbers = (num) => {
-  return !hasDuplicatedNumbers(num) && !hasZero(num) && isRightLength(num) && isNumeric(num);
+  return isRightLength(num) && hasNotDuplicatedNumbers(num) && hasNotZero(num) && isNumeric(num);
 };
 
 export default isValidNumbers;
