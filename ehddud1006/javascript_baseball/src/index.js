@@ -1,147 +1,16 @@
-const randomNumberGenerator = () => {
-  const randomNumberList = [];
-  while (randomNumberList.length < 3) {
-    // eslint-disable-next-line no-undef
-    const N = MissionUtils.Random.pickNumberInRange(1, 9);
-    if (!randomNumberList.includes(N)) {
-      randomNumberList.push(N);
-    }
-  }
-  return randomNumberList;
-};
-
-const isRightLength = (num) => {
-  return num.length === 3;
-};
-const hasDuplicatedNumbers = (num) => {
-  return new Set(num).size !== num.length;
-};
-
-const hasZero = (num) => {
-  return num.indexOf('0') !== -1;
-};
-
-const isNumeric = (num) => {
-  return !Number.isNaN(Number(num));
-};
-
-const isValidNumbers = (num) => {
-  return !hasDuplicatedNumbers(num) && !hasZero(num) && isRightLength(num) && isNumeric(num);
-};
-
-const strikeJudgment = (randomNumberList, userInputNumber) => {
-  let strikeCount = 0;
-  const notStrikeIndexList = [];
-  for (let i = 0; i < 3; i += 1) {
-    if (randomNumberList[i] === userInputNumber[i]) {
-      strikeCount += 1;
-    } else {
-      notStrikeIndexList.push(i);
-    }
-  }
-  return [strikeCount, notStrikeIndexList];
-};
-
-const ballJudment = (notStrikeIndexList, randomNumberList, userInputNumber) => {
-  let ballCount = 0;
-  notStrikeIndexList.forEach((notStrkeIndex) => {
-    if (randomNumberList.includes(userInputNumber[notStrkeIndex])) {
-      ballCount += 1;
-    }
-  });
-  return ballCount;
-};
-const strikeBallJudgment = (randomNumberList, userInputNumber) => {
-  const [strikeCount, notStrikeIndexList] = strikeJudgment(randomNumberList, userInputNumber);
-  const ballCount = ballJudment(notStrikeIndexList, randomNumberList, userInputNumber);
-  return [strikeCount, ballCount];
-};
-
-const generateResultMessage = (strikeCount, ballCount) => {
-  if (strikeCount === 0 && ballCount === 0) {
-    return '낫싱';
-  }
-  if (strikeCount === 0) {
-    return `${ballCount}볼`;
-  }
-  if (ballCount === 0) {
-    return `${strikeCount}스트라이크`;
-  }
-  return `${ballCount}볼 ${strikeCount}스트라이크`;
-};
+import strikeBallJudgment from './modules/strikeBallJudgment.js';
+import { generateResultMessage, init } from './modules/gameMethod.js';
 
 export default function BaseballGame() {
-  const submitButton = document.querySelector('#submit');
-  const userInput = document.querySelector('#user-input');
-  const resultContainer = document.querySelector('#result');
-  let randomNumberList = randomNumberGenerator();
-  let isAnswer = false;
-  console.log(randomNumberList);
-  const gameRestart = () => {
-    const appContainer = document.querySelector('#app');
-    const restartTextWrap = document.createElement('div');
-    const restartButtonWrap = document.createElement('p');
-    const restartText = document.createElement('span');
-    const restartButton = document.createElement('button');
-
-    restartText.textContent = '게임을 새로 시작하시겠습니까? ';
-    restartButton.setAttribute('id', 'game-restart-button');
-    restartButton.textContent = '게임 재시작';
-    restartTextWrap.appendChild(restartText);
-    restartButtonWrap.appendChild(restartButton);
-    appContainer.appendChild(restartTextWrap);
-    appContainer.appendChild(restartButtonWrap);
-    restartButton.addEventListener('click', () => {
-      resultContainer.innerHTML = '';
-      isAnswer = false;
-      userInput.value = '';
-      randomNumberList = randomNumberGenerator();
-      appContainer.removeChild(restartTextWrap);
-      appContainer.removeChild(restartButtonWrap);
-    });
-  };
-
   const play = (computerInputNumbers, userInputNumbers) => {
     const [strikeCount, ballCount] = strikeBallJudgment(computerInputNumbers, userInputNumbers);
     if (strikeCount === 3) {
-      isAnswer = true;
       return `<p>🎉<strong> 정답을 맞추셨습니다! </strong>🎉</p>`;
     }
     return generateResultMessage(strikeCount, ballCount);
   };
 
-  const resultProvider = (message) => {
-    if (isAnswer) {
-      resultContainer.innerHTML = message;
-      gameRestart();
-    } else {
-      resultContainer.textContent = message;
-    }
-  };
-
-  const gameStart = (e) => {
-    e.preventDefault();
-    if (isValidNumbers(userInput.value)) {
-      const userInputNumber = userInput.value.split('').map((v) => +v);
-      play(randomNumberList, userInputNumber);
-      const resultMessage = play(randomNumberList, userInputNumber);
-      resultProvider(resultMessage);
-    } else {
-      alert('🙅 1~9까지의 수를 중복없이 3개 작성해주세요!');
-      userInput.value = '';
-    }
-  };
-
-  const init = () => {
-    submitButton.addEventListener('click', (e) => gameStart(e));
-    userInput.addEventListener('keydown', (e) => {
-      if (e.keyCode === 'Enter' || e.isComposing) {
-        gameStart(e);
-      }
-    });
-  };
-
-  init();
+  init(play);
 }
 
 BaseballGame();
