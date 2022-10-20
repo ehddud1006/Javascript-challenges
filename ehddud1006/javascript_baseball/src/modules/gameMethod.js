@@ -1,24 +1,36 @@
 import { $submitButton, $userInput, $resultContainer } from './element.js';
 import isValidNumbers from './validation.js';
+import {
+  ANSWER,
+  STRIKE,
+  BALL,
+  NOTHING,
+  MIN_NUMBER,
+  MAX_NUMBER,
+  GAME_NUMBER_LENGTH,
+  RESTART_TEXT,
+  RESTART_BUTTON_TEXT,
+  EXCEPT_TYPE_INPUT_WARNING_MESSAGE,
+} from './constant.js';
 
 const generateResultMessage = (strikeCount, ballCount) => {
   if (strikeCount === 0 && ballCount === 0) {
-    return '낫싱';
+    return NOTHING;
   }
   if (strikeCount === 0) {
-    return `${ballCount}볼`;
+    return `${ballCount}${BALL}`;
   }
   if (ballCount === 0) {
-    return `${strikeCount}스트라이크`;
+    return `${strikeCount}${STRIKE}`;
   }
-  return `${ballCount}볼 ${strikeCount}스트라이크`;
+  return `${ballCount}${BALL} ${strikeCount}${STRIKE}`;
 };
 
 const randomNumberGenerator = () => {
   const randomNumberList = [];
-  while (randomNumberList.length < 3) {
+  while (randomNumberList.length < GAME_NUMBER_LENGTH) {
     // eslint-disable-next-line no-undef
-    const N = MissionUtils.Random.pickNumberInRange(1, 9);
+    const N = MissionUtils.Random.pickNumberInRange(MIN_NUMBER, MAX_NUMBER);
     if (!randomNumberList.includes(N)) {
       randomNumberList.push(N);
     }
@@ -32,9 +44,9 @@ const createGameRestartButton = () => {
   const restartButtonWrap = document.createElement('p');
   const restartText = document.createElement('span');
   const restartButton = document.createElement('button');
-  restartText.textContent = '게임을 새로 시작하시겠습니까? ';
+  restartText.textContent = RESTART_TEXT;
   restartButton.setAttribute('id', 'game-restart-button');
-  restartButton.textContent = '게임 재시작';
+  restartButton.textContent = RESTART_BUTTON_TEXT;
   restartTextWrap.appendChild(restartText);
   restartButtonWrap.appendChild(restartButton);
   appContainer.appendChild(restartTextWrap);
@@ -54,7 +66,7 @@ const gameRestart = (play, init) => {
 };
 
 const resultProvider = (message, play, init) => {
-  if (message === `<p>🎉<strong> 정답을 맞추셨습니다! </strong>🎉</p>`) {
+  if (message === ANSWER) {
     $resultContainer.innerHTML = message;
     gameRestart(play, init);
   } else {
@@ -70,7 +82,7 @@ const gameStart = (e, play, init, randomNumberList) => {
     const resultMessage = play(randomNumberList, userInputNumber);
     resultProvider(resultMessage, play, init);
   } else {
-    alert('🙅 1~9까지의 수를 중복없이 3개 작성해주세요!');
+    alert(EXCEPT_TYPE_INPUT_WARNING_MESSAGE);
     $userInput.value = '';
   }
 };
