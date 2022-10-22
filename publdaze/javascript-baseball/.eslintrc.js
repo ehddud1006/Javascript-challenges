@@ -14,5 +14,6 @@ module.exports = {
     'no-console': 'warn',
     'import/extensions': ['off'],
     'max-depth': ['error', 2],
+    'object-curly-newline': 'off',
   },
 };

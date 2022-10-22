@@ -6,27 +6,24 @@ import {
 } from './modules/counting.js';
 import { ExceptionCase, checkOccuredError } from './modules/exception.js';
 
-const getRandomNumbersWithInit = (userInput, gameRestartButton, result) => {
+const init = (userInput, gameRestartButton, result) => {
   gameRestartButton.style.display = 'none';
   userInput.value = '';
   result.innerHTML = '';
-  return MissionUtils.Random.pickUniqueNumbersInRange(1, 9, 3);
 };
 
-const isWin = strike => {
-  return strike === 3;
-};
+const getRandomNumbers = () =>
+  Array.from({ length: 3 }, () => MissionUtils.Random.pickNumberInRange(1, 9));
+
+const isWin = strike => strike === 3;
 
 export default function BaseballGame() {
   const { userInput, submit, gameRestartButton, result } = getElements();
 
-  let randomNumbers = getRandomNumbersWithInit(
-    userInput,
-    gameRestartButton,
-    result,
-  );
+  init(userInput, gameRestartButton, result);
+  let randomNumbers = getRandomNumbers();
 
-  submit.addEventListener('click', function (e) {
+  submit.addEventListener('click', e => {
     e.preventDefault();
 
     const inputNumArray = userInput.value.split('').map(Number);
@@ -51,13 +48,11 @@ export default function BaseballGame() {
     result.innerHTML = getOutputText(strike, ball);
   });
 
-  gameRestartButton.addEventListener('click', function (e) {
+  gameRestartButton.addEventListener('click', e => {
     e.preventDefault();
-    randomNumbers = getRandomNumbersWithInit(
-      userInput,
-      gameRestartButton,
-      result,
-    );
+
+    init(userInput, gameRestartButton, result);
+    randomNumbers = getRandomNumbers();
   });
 }
 
