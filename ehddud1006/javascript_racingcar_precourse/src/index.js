@@ -1,20 +1,29 @@
-import hideDomElement from './modules/dom.js';
+import { hideDomElement, $, revealRacingCountForm } from './modules/dom.js';
+import carNamesInputValidation from './modules/validatation.js';
 
 class CarRacingGame {
   constructor() {
-    this.carNamesInput = '';
+    this.carNamesArray = [];
+    this.racingCount = 0;
   }
 
   init() {
-    this.registerSubmitEvent();
+    this.registerCarNameSubmitEvent();
+    this.registerRacingCountSubmitEvent();
     hideDomElement();
   }
 
-  registerSubmitEvent() {
-    document.querySelector('#racing-names-form').addEventListener('submit', (e) => {
-      this.carNamesInput = document.querySelector('#car-names-input').value;
-      console.log(this.carNamesInput);
+  registerCarNameSubmitEvent() {
+    $('#racing-names-form').addEventListener('submit', (e) => {
       e.preventDefault();
+      const carNamesInput = $('#car-names-input');
+      if (carNamesInputValidation(carNamesInput.value)) {
+        this.carNamesArray = carNamesInput.value.split(',');
+        revealRacingCountForm();
+      } else {
+        window.alert('올바른 자동차명을 입력해주세요');
+        carNamesInput.value = '';
+      }
     });
   }
 }
