@@ -26,6 +26,13 @@ class CarRacingGame {
       }
     });
   }
+
+  registerRacingCountSubmitEvent() {
+    $('#racing-count-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.racingCount = $('#racing-count-input').value;
+    });
+  }
 }
 
 const RacingGame = new CarRacingGame();
