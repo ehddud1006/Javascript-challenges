@@ -19,6 +19,10 @@ class Car {
     }
   }
 
+  getDistance() {
+    return this.result.length;
+  }
+
   getResult() {
     return this.result.join('');
   }

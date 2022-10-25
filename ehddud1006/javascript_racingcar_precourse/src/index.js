@@ -1,7 +1,7 @@
 import Car from './model/Car.js';
 import { hideDomElement, $, revealRacingCountForm, revealRacingResult } from './modules/dom.js';
 import carNamesInputValidation from './modules/validatation.js';
-import resultForOneMove from './modules/render.js';
+import { resultForOneMove, listOfWinners } from './modules/render.js';
 
 class CarRacingGame {
   constructor() {
@@ -50,6 +50,7 @@ class CarRacingGame {
       revealRacingResult();
       this.setCarObject();
       $('#racing-result').insertAdjacentHTML('afterend', this.makeResultDomElementString());
+      $('#racing-winners').textContent = listOfWinners(this.carClassArray);
     });
   }
 }
