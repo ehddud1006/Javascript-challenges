@@ -2,12 +2,14 @@ const $ = (selector) => document.querySelector(selector);
 
 const $racingCountHeader = $('#racing-count-header');
 const $racingCountForm = $('#racing-count-form');
+const $racingResult = $('#racing-result');
+const $racingWinnerInformation = $('#racing-winner-information');
 
 const hideDomElement = () => {
   $racingCountHeader.style.display = 'none';
   $racingCountForm.style.display = 'none';
-  $('#racing-result').style.display = 'none';
-  $('#racing-winner-information').style.display = 'none';
+  $racingResult.style.display = 'none';
+  $racingWinnerInformation.style.display = 'none';
 };
 
 const revealRacingCountForm = () => {
@@ -15,4 +17,9 @@ const revealRacingCountForm = () => {
   $racingCountForm.style.display = 'block';
 };
 
-export { hideDomElement, $, revealRacingCountForm };
+const revealRacingResult = () => {
+  $racingResult.style.display = 'block';
+  $racingWinnerInformation.style.display = 'block';
+};
+
+export { hideDomElement, $, revealRacingCountForm, revealRacingResult };

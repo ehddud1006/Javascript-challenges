@@ -6,11 +6,21 @@ const randomNumberGenerator = () => {
 class Car {
   constructor(name) {
     this.name = name;
+    this.result = [];
   }
 
   getName() {
-    console.log(this.name);
-    console.log(randomNumberGenerator());
+    return this.name;
+  }
+
+  move() {
+    if (randomNumberGenerator() >= 4) {
+      this.result.push('-');
+    }
+  }
+
+  getResult() {
+    return this.result.join('');
   }
 }
 

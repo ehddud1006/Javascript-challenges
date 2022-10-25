@@ -1,6 +1,7 @@
 import Car from './model/Car.js';
-import { hideDomElement, $, revealRacingCountForm } from './modules/dom.js';
+import { hideDomElement, $, revealRacingCountForm, revealRacingResult } from './modules/dom.js';
 import carNamesInputValidation from './modules/validatation.js';
+import resultForOneMove from './modules/render.js';
 
 class CarRacingGame {
   constructor() {
@@ -13,6 +14,19 @@ class CarRacingGame {
     this.registerCarNameSubmitEvent();
     this.registerRacingCountSubmitEvent();
     hideDomElement();
+  }
+
+  setCarObject() {
+    this.carClassArray = this.carNamesArray.map((element) => new Car(element));
+  }
+
+  makeResultDomElementString() {
+    let result = '';
+
+    for (let i = 0; i < this.racingCount; i += 1) {
+      result += resultForOneMove(this.carClassArray);
+    }
+    return result;
   }
 
   registerCarNameSubmitEvent() {
@@ -33,8 +47,9 @@ class CarRacingGame {
     $('#racing-count-form').addEventListener('submit', (e) => {
       e.preventDefault();
       this.racingCount = $('#racing-count-input').value;
-      this.carClassArray = this.carNamesArray.map((element) => new Car(element));
-      this.carClassArray.forEach((element) => element.getName());
+      revealRacingResult();
+      this.setCarObject();
+      $('#racing-result').insertAdjacentHTML('afterend', this.makeResultDomElementString());
     });
   }
 }
