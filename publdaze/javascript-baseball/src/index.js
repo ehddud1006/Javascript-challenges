@@ -40,7 +40,7 @@ const isWin = (strike) => strike === 3;
 
 const getResult = (computerInputNumbers, userInputNumbers) => {
   const strike = getStrike(computerInputNumbers, userInputNumbers);
-  const ball = getBall(computerInputNumbers, userInputNumbers) - strike;
+  const ball = getBall(computerInputNumbers, userInputNumbers);
 
   if (isWin(strike, ball)) {
     gameRestartButton.style.display = 'block';
