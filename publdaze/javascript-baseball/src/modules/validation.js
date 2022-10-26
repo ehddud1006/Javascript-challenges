@@ -1,5 +1,5 @@
-const isNumberArray = arr => {
-  return arr.every(element => {
+const isNumberArray = (arr) => {
+  return arr.every((element) => {
     return !Number.isNaN(element);
   });
 };
@@ -9,17 +9,17 @@ const isInRange = (x, min, max) => {
 };
 
 const isInRangeArray = (arr, min, max) => {
-  return arr.every(element => {
+  return arr.every((element) => {
     return isInRange(element, min, max);
   });
 };
 
 const isLengthEquals = (arr, num) => {
-  return arr.length === num ? true : false;
+  return arr.length === num;
 };
 
-const isEachUniqueNumber = arr => {
-  return arr.every(element => {
+const isEachUniqueNumber = (arr) => {
+  return arr.every((element) => {
     return arr.indexOf(element) === arr.lastIndexOf(element);
   });
 };

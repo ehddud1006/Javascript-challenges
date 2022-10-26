@@ -14,7 +14,7 @@ const ExceptionCase = {
 };
 Object.freeze(ExceptionCase);
 
-const checkOccuredError = inputNumArray => {
+const validation = (inputNumArray) => {
   if (!isNumberArray(inputNumArray)) {
     return ExceptionCase.NUMBER_FORMAT_EXCEPTION;
   }
@@ -30,4 +30,4 @@ const checkOccuredError = inputNumArray => {
   return ExceptionCase.NOTHING;
 };
 
-export { ExceptionCase, checkOccuredError };
+export { ExceptionCase, validation };

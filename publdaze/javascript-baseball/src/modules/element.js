@@ -1,11 +1,6 @@
-const getElements = () => ({
-  // input
-  userInput: document.querySelector('#user-input'),
-  // button
-  submit: document.querySelector('#submit'),
-  gameRestartButton: document.querySelector('#game-restart-button'),
-  // output
-  result: document.querySelector('#result'),
-});
+const userInput = document.querySelector('#user-input');
+const submit = document.querySelector('#submit');
+const gameRestartButton = document.querySelector('#game-restart-button');
+const result = document.querySelector('#result');
 
-export default getElements;
+export { userInput, submit, gameRestartButton, result };

@@ -11,9 +11,11 @@ module.exports = {
   },
   rules: {
     'max-lines-per-function': ['error', 15],
+    'max-depth': ['error', 2],
     'no-console': 'warn',
     'import/extensions': ['off'],
-    'max-depth': ['error', 2],
     'object-curly-newline': 'off',
+    'operator-linebreak': 'off',
+    'arrow-body-style': 'off',
   },
 };
