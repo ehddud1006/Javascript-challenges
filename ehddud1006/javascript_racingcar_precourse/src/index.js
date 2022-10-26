@@ -11,6 +11,7 @@ class CarRacingGame {
   }
 
   init() {
+    this.preventFormSubmitEvent();
     this.registerCarNameSubmitEvent();
     this.registerRacingCountSubmitEvent();
     hideDomElement();
@@ -29,23 +30,24 @@ class CarRacingGame {
     return result;
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  preventFormSubmitEvent() {
+    $('#racing-names-form').addEventListener('submit', (e) => e.preventDefault());
+    $('#racing-count-form').addEventListener('submit', (e) => e.preventDefault());
+  }
+
   registerCarNameSubmitEvent() {
-    $('#racing-names-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const carNamesInput = $('#car-names-input');
-      if (carNamesInputValidation(carNamesInput.value)) {
-        this.carNamesArray = carNamesInput.value.split(',');
+    $('#car-names-submit').addEventListener('click', () => {
+      const carNamesInputValue = $('#car-names-input').value;
+      if (carNamesInputValidation(carNamesInputValue)) {
+        this.carNamesArray = carNamesInputValue.split(',');
         revealRacingCountForm();
-      } else {
-        window.alert('올바른 자동차명을 입력해주세요');
-        carNamesInput.value = '';
       }
     });
   }
 
   registerRacingCountSubmitEvent() {
-    $('#racing-count-form').addEventListener('submit', (e) => {
-      e.preventDefault();
+    $('#racing-count-submit').addEventListener('click', () => {
       this.racingCount = $('#racing-count-input').value;
       revealRacingResult();
       this.setCarObject();
