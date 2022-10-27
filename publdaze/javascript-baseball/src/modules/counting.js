@@ -5,7 +5,7 @@ const countMatchNumbers = (numberArray1, numberArray2) => {
 
 const countMatchNumbersWithPos = (numberArray1, numberArray2) => {
   return numberArray1.reduce((prev, curr, currIdx) => {
-    if (curr === numberArray2[currIdx]) return (prev += 1);
+    if (curr === numberArray2[currIdx]) return prev + 1;
     return prev;
   }, 0);
 };
