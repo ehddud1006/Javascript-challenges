@@ -1,6 +1,8 @@
-const userInput = document.querySelector('#user-input');
-const submit = document.querySelector('#submit');
-const gameRestartButton = document.querySelector('#game-restart-button');
-const result = document.querySelector('#result');
+const $ = (selector) => document.querySelector(selector);
+
+const userInput = $('#user-input');
+const submit = $('#submit');
+const gameRestartButton = $('#game-restart-button');
+const result = $('#result');
 
 export { userInput, submit, gameRestartButton, result };
