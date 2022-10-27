@@ -18,6 +18,8 @@ module.exports = {
     'object-curly-newline': 'off',
     'operator-linebreak': 'off',
     'arrow-body-style': 'off',
+    'implicit-arrow-linebreak': 'off',
+    'function-paren-newline': 'off',
     'no-magic-numbers': 'warn',
   },
 };

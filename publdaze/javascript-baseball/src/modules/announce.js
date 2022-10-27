@@ -2,13 +2,16 @@ const alertMsg = (msg) => {
   alert(msg);
 };
 
-const getOutputText = (strike, ball) => {
-  let output = '';
-  if (ball > 0) output += `${ball}볼 `;
-  if (strike > 0) output += `${strike}스트라이크`;
-  if (output.length === 0) output = '낫싱';
+const hasBall = (ball) => ball > 0;
+const hasStrike = (strike) => strike > 0;
 
-  return output;
+const getOutputText = (strike, ball) => {
+  if (hasBall(ball) && hasStrike(strike)) {
+    return `${ball}볼 ${strike}스트라이크`;
+  }
+  if (hasBall(ball)) return `${ball}볼`;
+  if (hasStrike(strike)) return `${strike}스트라이크`;
+  return '낫싱';
 };
 
 export { alertMsg, getOutputText };

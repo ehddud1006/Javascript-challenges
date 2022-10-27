@@ -25,6 +25,7 @@ const init = () => {
 
 const getRandomNumbers = () => {
   return Array.from({ length: GAME_NUMBER_LENGTH }, () =>
+    // eslint-disable-next-line no-undef
     MissionUtils.Random.pickNumberInRange(MIN_NUMBER, MAX_NUMBER),
   );
 };
