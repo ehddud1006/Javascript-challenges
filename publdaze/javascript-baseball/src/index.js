@@ -10,6 +10,12 @@ import {
   countMatchNumbers,
   countMatchNumbersWithPos,
 } from './modules/counting.js';
+import {
+  MIN_NUMBER,
+  MAX_NUMBER,
+  GAME_NUMBER_LENGTH,
+  WIN_STRIKE_COUNT,
+} from './modules/constant.js';
 
 const init = () => {
   gameRestartButton.style.display = 'none';
@@ -18,8 +24,8 @@ const init = () => {
 };
 
 const getRandomNumbers = () => {
-  return Array.from({ length: 3 }, () =>
-    MissionUtils.Random.pickNumberInRange(1, 9),
+  return Array.from({ length: GAME_NUMBER_LENGTH }, () =>
+    MissionUtils.Random.pickNumberInRange(MIN_NUMBER, MAX_NUMBER),
   );
 };
 
@@ -36,7 +42,7 @@ const getBall = (randomNumbers, inputNumArray) => {
   );
 };
 
-const isWin = (strike) => strike === 3;
+const isWin = (strike) => strike === WIN_STRIKE_COUNT;
 
 const getResult = (computerInputNumbers, userInputNumbers) => {
   const strike = getStrike(computerInputNumbers, userInputNumbers);

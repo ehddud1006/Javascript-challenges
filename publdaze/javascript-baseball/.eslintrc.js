@@ -1,3 +1,4 @@
+/* eslint-disable no-magic-numbers */
 module.exports = {
   env: {
     browser: true,
@@ -17,5 +18,6 @@ module.exports = {
     'object-curly-newline': 'off',
     'operator-linebreak': 'off',
     'arrow-body-style': 'off',
+    'no-magic-numbers': 'warn',
   },
 };
