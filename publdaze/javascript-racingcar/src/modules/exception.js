@@ -3,6 +3,7 @@ import {
   MAX_RACING_NUMBER,
   MAX_CAR_NAME_LENGTH,
 } from './constant.js';
+import { isInRange, includeLengthExceed, isEachUnique } from './validation.js';
 
 const ExceptionCase = {
   NUMBER_FORMAT_EXCEPTION: Symbol('입력값은 숫자로만 구성되어야합니다.'),
@@ -18,4 +19,27 @@ const ExceptionCase = {
 };
 Object.freeze(ExceptionCase);
 
-export default ExceptionCase;
+const carNamesValidation = (inputArray) => {
+  if (!inputArray) {
+    return ExceptionCase.EXIST_EXCEPTION;
+  }
+  if (includeLengthExceed(inputArray, MAX_CAR_NAME_LENGTH)) {
+    return ExceptionCase.LENGTH_EXCEPTION;
+  }
+  if (!isEachUnique(inputArray)) {
+    return ExceptionCase.DUPLICATION_EXCEPTION;
+  }
+  return ExceptionCase.NOTHING;
+};
+
+const racingCountValidation = (inputNum) => {
+  if (!inputNum) {
+    return ExceptionCase.EXIST_EXCEPTION;
+  }
+  if (!isInRange(inputNum, MIN_RACING_NUMBER, MAX_RACING_NUMBER)) {
+    return ExceptionCase.RANGE_EXCEPTION;
+  }
+  return ExceptionCase.NOTHING;
+};
+
+export { ExceptionCase, carNamesValidation, racingCountValidation };

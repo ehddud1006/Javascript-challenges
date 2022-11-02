@@ -7,17 +7,12 @@ import {
   racingWinners,
 } from './modules/element.js';
 import {
-  isInRange,
-  includeLengthExceed,
-  isEachUnique,
-} from './modules/validation.js';
-import ExceptionCase from './modules/exception.js';
+  ExceptionCase,
+  carNamesValidation,
+  racingCountValidation,
+} from './modules/exception.js';
 import { getInputNumber, getInputStringArray } from './modules/input.js';
-import {
-  MIN_RACING_NUMBER,
-  MAX_RACING_NUMBER,
-  MAX_CAR_NAME_LENGTH,
-} from './modules/constant.js';
+import { MIN_RACING_NUMBER, MAX_RACING_NUMBER } from './modules/constant.js';
 import alertMsg from './modules/announce.js';
 
 function Car(name) {
@@ -29,31 +24,6 @@ const getRandomNumbers = (racingCount) =>
     // eslint-disable-next-line no-undef
     MissionUtils.Random.pickNumberInRange(MIN_RACING_NUMBER, MAX_RACING_NUMBER),
   );
-
-const isInvalid = (exception) => exception !== ExceptionCase.NOTHING;
-
-const carNamesValidation = (inputArray) => {
-  if (!inputArray) {
-    return ExceptionCase.EXIST_EXCEPTION;
-  }
-  if (includeLengthExceed(inputArray, MAX_CAR_NAME_LENGTH)) {
-    return ExceptionCase.LENGTH_EXCEPTION;
-  }
-  if (!isEachUnique(inputArray)) {
-    return ExceptionCase.DUPLICATION_EXCEPTION;
-  }
-  return ExceptionCase.NOTHING;
-};
-
-const racingCountValidation = (inputNum) => {
-  if (!inputNum) {
-    return ExceptionCase.EXIST_EXCEPTION;
-  }
-  if (!isInRange(inputNum, MIN_RACING_NUMBER, MAX_RACING_NUMBER)) {
-    return ExceptionCase.RANGE_EXCEPTION;
-  }
-  return ExceptionCase.NOTHING;
-};
 
 const getCarNames = () => getInputStringArray(carNamesInput, ',');
 
@@ -70,6 +40,7 @@ const getCarsInstance = () => {
   return carNames.reduce((p, c) => [...p, new Car(c)], []);
 };
 
+const isInvalid = (exception) => exception !== ExceptionCase.NOTHING;
 const getRacingCount = () => {
   const racingCount = getInputNumber(racingCountInput);
   const exception = racingCountValidation(racingCount);
@@ -108,9 +79,12 @@ const printEachTurnResult = (car, i) => {
 
 const getFinalMove = (carsInstance) =>
   carsInstance.map((car) => car.stackedMoveCounts.at(-1));
+
 const getMaxMove = (arr) => Math.max(...arr);
+
 const getWinCars = (maxMove, carsInstance) =>
   carsInstance.filter((car) => car.stackedMoveCounts.at(-1) === maxMove);
+
 const printWinners = (winCars) => {
   racingWinners.innerHTML = winCars.map((winCar) => winCar.name).join(',');
 };
