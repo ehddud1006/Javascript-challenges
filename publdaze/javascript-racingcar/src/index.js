@@ -23,9 +23,13 @@ function Car(name) {
   this.name = name;
 }
 
-const isInvalid = (exception) => {
-  return exception !== ExceptionCase.NOTHING;
-};
+const getRandomNumbers = (racingCount) =>
+  Array.from({ length: racingCount }, () =>
+    // eslint-disable-next-line no-undef
+    MissionUtils.Random.pickNumberInRange(MIN_RACING_NUMBER, MAX_RACING_NUMBER),
+  );
+
+const isInvalid = (exception) => exception !== ExceptionCase.NOTHING;
 
 const carNamesValidation = (inputArray) => {
   if (!inputArray) {
@@ -50,33 +54,58 @@ const racingCountValidation = (inputNum) => {
   return ExceptionCase.NOTHING;
 };
 
-const handleCarNames = (e) => {
-  e.preventDefault();
+const getCarNames = () => getInputStringArray(carNamesInput, ',');
 
-  const carNames = getInputStringArray(carNamesInput, ',');
+const getCarsInstance = () => {
+  const carNames = getCarNames();
   const exception = carNamesValidation(carNames);
 
   if (isInvalid(exception)) {
     alertMsg(exception.description);
+    carNamesInput.value = '';
+    return null;
   }
 
-  const cars = carNames.reduce((p, c) => [...p, new Car(c)], []);
+  return carNames.reduce((p, c) => [...p, new Car(c)], []);
 };
 
-const handleRacingCount = (e) => {
-  e.preventDefault();
-
+const getRacingCount = () => {
   const racingCount = getInputNumber(racingCountInput);
   const exception = racingCountValidation(racingCount);
 
   if (isInvalid(exception)) {
     alertMsg(exception.description);
+    racingCountInput.value = '';
+    return null;
   }
+  return racingCount;
 };
 
-const Racing = () => {
-  carNamesSubmitBtn.addEventListener('click', handleCarNames);
-  racingCountSubmitBtn.addEventListener('click', handleRacingCount);
+const hasAllRacingInfo = (racingInfo) =>
+  racingInfo.carsInstance && racingInfo.racingCount;
+
+const setCarsMoveCount = (racingInfo) =>
+  racingInfo.carsInstance.map((car) => ({
+    ...car,
+    moveCount: getRandomNumbers(racingInfo.racingCount),
+  }));
+
+const race = (racingInfo) => {
+  const carsInstance = setCarsMoveCount(racingInfo);
 };
 
-Racing();
+const RacingGame = () => {
+  const racingInfo = { carsInstance: null, racingCount: null };
+  carNamesSubmitBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    racingInfo.carsInstance = getCarsInstance();
+    if (hasAllRacingInfo(racingInfo)) race(racingInfo);
+  });
+  racingCountSubmitBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    racingInfo.racingCount = getRacingCount();
+    if (hasAllRacingInfo(racingInfo)) race(racingInfo);
+  });
+};
+
+RacingGame();
