@@ -3,6 +3,7 @@ import {
   carNamesSubmitBtn,
   racingCountInput,
   racingCountSubmitBtn,
+  racingResult,
   racingWinners,
 } from './modules/element.js';
 import {
@@ -84,14 +85,41 @@ const getRacingCount = () => {
 const hasAllRacingInfo = (racingInfo) =>
   racingInfo.carsInstance && racingInfo.racingCount;
 
-const setCarsMoveCount = (racingInfo) =>
+const setCarsMoveCounts = (racingInfo) =>
   racingInfo.carsInstance.map((car) => ({
     ...car,
-    moveCount: getRandomNumbers(racingInfo.racingCount),
+    moveCounts: getRandomNumbers(racingInfo.racingCount),
   }));
 
+const setCarsStackedMoveCounts = (racingInfo) => {
+  const carsInstance = setCarsMoveCounts(racingInfo);
+  return carsInstance.map((car) => ({
+    ...car,
+    stackedMoveCounts: car.moveCounts.reduce((prev, curr) => {
+      if (prev.length === 0) return [...prev, curr];
+      return [...prev, prev.at(-1) + curr];
+    }, []),
+  }));
+};
+
+const printEachTurnResult = (car, i) => {
+  return `${car.name}: ${'-'.repeat(car.stackedMoveCounts[i])}<br />`;
+};
+
+const printResult = (carsInstance, racingCount) => {
+  racingResult.innerHTML += '<br /><br />';
+  for (let i = 0; i < racingCount; i += 1) {
+    carsInstance.forEach((car) => {
+      racingResult.innerHTML += printEachTurnResult(car, i);
+    });
+    racingResult.innerHTML += '<br />';
+  }
+};
+
 const race = (racingInfo) => {
-  const carsInstance = setCarsMoveCount(racingInfo);
+  const carsInstance = setCarsStackedMoveCounts(racingInfo);
+
+  printResult(carsInstance, racingInfo.racingCount);
 };
 
 const RacingGame = () => {
