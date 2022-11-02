@@ -106,6 +106,15 @@ const printEachTurnResult = (car, i) => {
   return `${car.name}: ${'-'.repeat(car.stackedMoveCounts[i])}<br />`;
 };
 
+const getFinalMove = (carsInstance) =>
+  carsInstance.map((car) => car.stackedMoveCounts.at(-1));
+const getMaxMove = (arr) => Math.max(...arr);
+const getWinCars = (maxMove, carsInstance) =>
+  carsInstance.filter((car) => car.stackedMoveCounts.at(-1) === maxMove);
+const printWinners = (winCars) => {
+  racingWinners.innerHTML = winCars.map((winCar) => winCar.name).join(',');
+};
+
 const printResult = (carsInstance, racingCount) => {
   racingResult.innerHTML += '<br /><br />';
   for (let i = 0; i < racingCount; i += 1) {
@@ -114,6 +123,9 @@ const printResult = (carsInstance, racingCount) => {
     });
     racingResult.innerHTML += '<br />';
   }
+  const maxMove = getMaxMove(getFinalMove(carsInstance));
+  const winCars = getWinCars(maxMove, carsInstance);
+  printWinners(winCars);
 };
 
 const race = (racingInfo) => {
