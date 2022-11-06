@@ -16,6 +16,7 @@ import {
   GAME_NUMBER_LENGTH,
   WIN_STRIKE_COUNT,
 } from './modules/constant.js';
+import { hasSameNumber } from './modules/validation.js';
 
 const init = () => {
   gameRestartButton.style.display = 'none';
@@ -24,10 +25,19 @@ const init = () => {
 };
 
 const getRandomNumbers = () => {
-  return Array.from({ length: GAME_NUMBER_LENGTH }, () =>
-    // eslint-disable-next-line no-undef
-    MissionUtils.Random.pickNumberInRange(MIN_NUMBER, MAX_NUMBER),
-  );
+  const randomNumbers = [];
+
+  while (randomNumbers.length !== GAME_NUMBER_LENGTH) {
+    const randomNumber = MissionUtils.Random.pickNumberInRange(
+      MIN_NUMBER,
+      MAX_NUMBER,
+    );
+    if (!hasSameNumber(randomNumbers, randomNumber)) {
+      randomNumbers.push(randomNumber);
+    }
+  }
+
+  return randomNumbers;
 };
 
 const getInputNumbers = () => userInput.value.split('').map(Number);
