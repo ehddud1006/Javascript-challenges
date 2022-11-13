@@ -4,7 +4,7 @@ const isEmpty = (carName) => {
   return carName === '';
 };
 
-const isLengthConditionDissatisfaction = (carNamesInput, predi) => carNamesInput.split(',').some(predi);
+const isLengthConditionDissatisfaction = (carNamesInput, condition) => carNamesInput.split(',').some(condition);
 
 const isContainEmptyName = (carNamesInput) => carNamesInput.split(',').some(isEmpty);
 
