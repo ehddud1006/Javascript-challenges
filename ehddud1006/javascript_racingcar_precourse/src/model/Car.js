@@ -13,7 +13,7 @@ class Car {
     return this.name;
   }
 
-  move() {
+  moveOrStop() {
     if (randomNumberGenerator() >= 4) {
       this.result.push('-');
     }

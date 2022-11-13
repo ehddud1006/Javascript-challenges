@@ -1,8 +1,10 @@
+const oneTurnOfCarRaceResult = (car) => `<div>${car.getName()}: ${car.getResult()}</div>`;
+
 const resultForOneMove = (carClassArray) => {
   let result = '';
   carClassArray.forEach((car) => {
-    car.move();
-    result += `<div>${car.getName()}: ${car.getResult()}</div>`;
+    car.moveOrStop();
+    result += oneTurnOfCarRaceResult(car);
   });
   return `${result}</br>`;
 };
