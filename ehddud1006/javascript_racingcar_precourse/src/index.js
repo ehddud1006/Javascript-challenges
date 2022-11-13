@@ -22,12 +22,7 @@ class CarRacingGame {
   }
 
   makeResultDomElementString() {
-    let result = '';
-
-    for (let i = 0; i < this.racingCount; i += 1) {
-      result += resultForOneMove(this.carClassArray);
-    }
-    return result;
+    return Array(this.racingCount).reduce((prev) => prev + resultForOneMove(this.carClassArray), '');
   }
 
   // eslint-disable-next-line class-methods-use-this
