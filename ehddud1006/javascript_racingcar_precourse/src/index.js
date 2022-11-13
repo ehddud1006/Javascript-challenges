@@ -22,7 +22,7 @@ class CarRacingGame {
   }
 
   makeResultDomElementString() {
-    return Array(this.racingCount).reduce((prev) => prev + resultForOneMove(this.carClassArray), '');
+    return Array.from({ length: this.racingCount }, () => resultForOneMove(this.carClassArray)).join('');
   }
 
   // eslint-disable-next-line class-methods-use-this
